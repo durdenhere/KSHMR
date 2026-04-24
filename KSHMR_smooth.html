@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kashmir Trip 2026 🏔️</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --pine:    #12312a;
+  --teal:    #2a7a6a;
+  --saffron: #e07b20;
+  --gold:    #f0c040;
+  --snow:    #f6f3ee;
+  --spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* ── PAGE SHELL ── */
+html, body { height:100%; overflow:hidden; }
+body {
+  font-family:'Outfit',sans-serif;
+  background:var(--pine); color:var(--snow);
+  display:flex; flex-direction:column;
+}
+
+/* ── HEADER ── */
+.header {
+  flex-shrink:0;
+  text-align:center; padding:1.3rem 1.5rem .85rem;
+  background:linear-gradient(180deg,#08180f 0%,var(--pine) 100%);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  position:relative; overflow:hidden;
+}
+.header::after {
+  content:'';
+  position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+  width:60%; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(224,123,32,.4), transparent);
+}
+.header-tag {
+  display:inline-block; background:rgba(224,123,32,.18);
+  border:1px solid rgba(224,123,32,.5); color:var(--gold);
+  font-size:.67rem; font-weight:600; letter-spacing:3px;
+  text-transform:uppercase; padding:.22rem .85rem; border-radius:30px; margin-bottom:.45rem;
+  animation: headerTagPop .6s var(--spring) both;
+}
+.header h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.55rem,3.8vw,2.9rem); font-weight:700; color:#fff; line-height:1.1;
+  animation: headerSlideUp .7s var(--ease-out-expo) .1s both;
+}
+.header h1 em { color:var(--saffron); font-style:italic; }
+.header-meta {
+  margin-top:.3rem; font-size:.72rem; color:rgba(255,255,255,.38); font-weight:300;
+  animation: headerSlideUp .7s var(--ease-out-expo) .2s both;
+}
+
+@keyframes headerTagPop {
+  from { opacity:0; transform:scale(.85) translateY(-4px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+@keyframes headerSlideUp {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ── TWO-COLUMN LAYOUT ── */
+.layout {
+  flex:1; min-height:0;
+  display:grid;
+  grid-template-columns:54% 46%;
+  overflow:hidden;
+}
+
+/* ── LEFT: MAP PANEL ── */
+.map-panel {
+  height:100%; display:flex; flex-direction:column;
+  padding:1.1rem 1.1rem .85rem;
+  background:#0c2218;
+  border-right:1px solid rgba(255,255,255,.07);
+  overflow:hidden;
+}
+.map-title {
+  flex-shrink:0;
+  font-size:.63rem; font-weight:600; letter-spacing:2px;
+  text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:.55rem;
+}
+.map-wrap {
+  flex:1; min-height:0;
+  border-radius:11px; overflow:hidden;
+  background:#163020; border:1px solid rgba(255,255,255,.07);
+  transition: box-shadow .4s var(--ease-out-expo);
+}
+.map-wrap.map-pulse {
+  box-shadow: 0 0 0 3px rgba(224,123,32,.35), 0 0 24px rgba(224,123,32,.15);
+}
+#svg-map { width:100%; height:100%; display:block; }
+
+/* ── BUTTON ROW ── */
+.btn-row { flex-shrink:0; display:flex; align-items:center; gap:.55rem; margin-top:.75rem; }
+.btn-next {
+  flex:1; background:var(--saffron); color:#fff; border:none;
+  padding:.72rem 1rem; border-radius:10px; font-family:'Outfit',sans-serif;
+  font-size:.86rem; font-weight:600; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; gap:.4rem;
+  position:relative; overflow:hidden;
+  transition: background .25s var(--ease-out-expo),
+              transform .2s var(--spring),
+              box-shadow .25s var(--ease-out-expo);
+  box-shadow: 0 4px 16px rgba(224,123,32,.3), 0 1px 0 rgba(255,255,255,.15) inset;
+}
+.btn-next::before {
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(circle at 50% 50%, rgba(255,255,255,.22) 0%, transparent 70%);
+  opacity:0;
+  transition: opacity .3s ease;
+}
+.btn-next:hover  {
+  background:#d06010;
+  transform:translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 24px rgba(224,123,32,.45), 0 1px 0 rgba(255,255,255,.15) inset;
+}
+.btn-next:hover::before { opacity:1; }
+.btn-next:active {
+  transform:translateY(0) scale(.98);
+  box-shadow: 0 2px 8px rgba(224,123,32,.25);
+  transition-duration:.08s;
+}
+.btn-next:disabled {
+  background:#2a3a32; cursor:default; transform:none;
+  box-shadow:none; color:rgba(255,255,255,.3);
+}
+
+/* Ripple effect */
+.ripple {
+  position:absolute; border-radius:50%;
+  background:rgba(255,255,255,.35);
+  transform:scale(0);
+  animation:rippleEffect .55s var(--ease-out-expo) forwards;
+  pointer-events:none;
+}
+@keyframes rippleEffect {
+  to { transform:scale(4); opacity:0; }
+}
+
+.btn-icon {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:18px; height:18px;
+  transition: transform .3s var(--spring);
+}
+.btn-next:not(:disabled):hover .btn-icon {
+  transform: translateX(2px) scale(1.15);
+}
+
+.btn-reset {
+  background:rgba(255,255,255,.07); color:rgba(255,255,255,.48);
+  border:1px solid rgba(255,255,255,.12); padding:.72rem .8rem;
+  border-radius:10px; font-size:.78rem; cursor:pointer;
+  transition: all .25s var(--ease-out-expo);
+  font-family:'Outfit',sans-serif; white-space:nowrap;
+  position:relative; overflow:hidden;
+}
+.btn-reset:hover {
+  background:rgba(255,255,255,.13); color:#fff;
+  border-color:rgba(255,255,255,.25);
+  transform:scale(1.03);
+}
+.btn-reset:active { transform:scale(.97); transition-duration:.08s; }
+
+.step-counter {
+  flex-shrink:0; font-size:.63rem; color:rgba(255,255,255,.26);
+  text-align:center; margin-top:.3rem; letter-spacing:.5px;
+  transition: all .35s var(--ease-out-expo);
+}
+.step-counter.bump {
+  animation: counterBump .4s var(--spring);
+}
+@keyframes counterBump {
+  0%   { transform:scale(1); }
+  40%  { transform:scale(1.15); color:rgba(240,192,64,.7); }
+  100% { transform:scale(1); }
+}
+
+/* ── RIGHT: INFO PANEL ── */
+.info-panel {
+  height:100%; overflow-y:auto;
+  padding:1.1rem;
+  background:var(--pine);
+  scroll-behavior:smooth;
+}
+.info-panel::-webkit-scrollbar { width:3px; }
+.info-panel::-webkit-scrollbar-thumb {
+  background:rgba(255,255,255,.1); border-radius:3px;
+  transition: background .2s;
+}
+.info-panel::-webkit-scrollbar-thumb:hover { background:rgba(255,255,255,.22); }
+
+/* ── PROGRESS ── */
+.journey-bar { margin-bottom:.9rem; }
+.journey-bar-label {
+  font-size:.63rem; font-weight:600; letter-spacing:1.5px;
+  text-transform:uppercase; color:rgba(255,255,255,.22); margin-bottom:.38rem;
+}
+.progress-track {
+  background:rgba(255,255,255,.08); border-radius:10px; height:4px; overflow:hidden;
+  position:relative;
+}
+.progress-track::after {
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,.06) 50%, transparent 100%);
+  background-size:200% 100%;
+  animation:shimmer 2.5s infinite linear;
+}
+@keyframes shimmer {
+  from { background-position:-200% 0; }
+  to   { background-position:200% 0; }
+}
+.progress-fill {
+  height:100%; border-radius:10px; position:relative; z-index:1;
+  background:linear-gradient(90deg,var(--teal),var(--saffron));
+  transition:width .65s var(--ease-out-expo);
+}
+.progress-fill::after {
+  content:'';
+  position:absolute; right:0; top:50%; transform:translateY(-50%);
+  width:8px; height:8px; border-radius:50%;
+  background:var(--saffron);
+  box-shadow:0 0 8px rgba(224,123,32,.8);
+  transition: opacity .3s ease;
+}
+.progress-steps { display:flex; justify-content:space-between; margin-top:.28rem; flex-wrap:wrap; gap:.15rem; }
+.progress-step  {
+  font-size:.54rem; color:rgba(255,255,255,.18); font-weight:500; cursor:pointer;
+  transition: color .3s ease, transform .25s var(--spring);
+  padding:.1rem .05rem;
+}
+.progress-step:hover { transform:translateY(-1px); color:rgba(255,255,255,.45); }
+.progress-step.done   { color:var(--teal); }
+.progress-step.active { color:var(--saffron); font-weight:700; }
+.progress-step.just-activated {
+  animation:stepActivate .5s var(--spring);
+}
+@keyframes stepActivate {
+  0%   { transform:translateY(0) scale(1); }
+  40%  { transform:translateY(-3px) scale(1.18); }
+  100% { transform:translateY(0) scale(1); }
+}
+
+/* ── CURRENT STOP CARD ── */
+.current-stop {
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09);
+  border-radius:13px; padding:1.1rem; margin-bottom:.9rem;
+  position:relative; overflow:hidden;
+  transform-origin:top center;
+  will-change:transform, opacity;
+}
+.current-stop::before {
+  content:''; position:absolute; top:0; left:0; right:0;
+  height:2.5px; background:var(--saffron); border-radius:13px 13px 0 0;
+  transition: transform .5s var(--ease-out-expo);
+}
+.current-stop::after {
+  content:'';
+  position:absolute; top:0; left:-100%;
+  width:100%; height:100%;
+  background:linear-gradient(105deg, transparent 40%, rgba(255,255,255,.04) 50%, transparent 60%);
+  transition: none;
+}
+.current-stop.card-enter::after {
+  left:100%;
+  transition: left .6s ease;
+}
+
+/* Swiggy-style card slide */
+@keyframes cardSlideUp {
+  0%   { opacity:0; transform:translateY(18px) scale(.98); }
+  60%  { opacity:1; transform:translateY(-3px) scale(1.005); }
+  100% { opacity:1; transform:translateY(0) scale(1); }
+}
+@keyframes cardSlideDown {
+  0%   { opacity:1; transform:translateY(0) scale(1); }
+  100% { opacity:0; transform:translateY(-12px) scale(.97); }
+}
+.card-enter { animation:cardSlideUp .42s var(--ease-out-expo) both; }
+.card-exit  { animation:cardSlideDown .2s ease-in both; }
+
+.stop-phase {
+  font-size:.62rem; font-weight:600; letter-spacing:2px;
+  text-transform:uppercase; color:var(--saffron); margin-bottom:.32rem;
+}
+.stop-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.55rem; font-weight:700; color:#fff; line-height:1.15; margin-bottom:.18rem;
+}
+.stop-date { font-size:.72rem; color:rgba(255,255,255,.36); margin-bottom:.72rem; }
+.stop-details { display:flex; flex-direction:column; gap:.35rem; }
+
+/* Staggered detail rows */
+.stop-detail-row {
+  display:flex; gap:.45rem; font-size:.78rem; line-height:1.45;
+  opacity:0; transform:translateX(-8px);
+  animation:detailSlideIn .35s var(--ease-out-expo) both;
+}
+.stop-detail-row:nth-child(1) { animation-delay:.08s; }
+.stop-detail-row:nth-child(2) { animation-delay:.14s; }
+.stop-detail-row:nth-child(3) { animation-delay:.20s; }
+.stop-detail-row:nth-child(4) { animation-delay:.26s; }
+@keyframes detailSlideIn {
+  to { opacity:1; transform:translateX(0); }
+}
+
+.stop-icon  { flex-shrink:0; font-size:.82rem; margin-top:1px; }
+.stop-text  { color:rgba(255,255,255,.63); }
+.stop-text strong { color:rgba(255,255,255,.9); font-weight:600; }
+
+.cost-tags  { display:flex; flex-wrap:wrap; gap:.28rem; margin-top:.75rem; }
+.cost-tag   {
+  font-size:.65rem; font-weight:600; padding:.18rem .55rem; border-radius:20px;
+  opacity:0; transform:scale(.88) translateY(4px);
+  animation:tagPop .35s var(--spring) both;
+}
+.cost-tag:nth-child(1) { animation-delay:.22s; }
+.cost-tag:nth-child(2) { animation-delay:.30s; }
+.cost-tag:nth-child(3) { animation-delay:.38s; }
+@keyframes tagPop {
+  to { opacity:1; transform:scale(1) translateY(0); }
+}
+.tag-train  { background:rgba(42,122,106,.25); border:1px solid rgba(42,122,106,.5); color:#80e0c8; }
+.tag-bus    { background:rgba(90,120,160,.25); border:1px solid rgba(90,120,160,.5); color:#a8c8f0; }
+.tag-stay   { background:rgba(224,123,32,.2);  border:1px solid rgba(224,123,32,.45); color:#f0c080; }
+
+/* ── STOPS LIST ── */
+.stops-list { display:flex; flex-direction:column; gap:.34rem; }
+.stop-item {
+  display:flex; align-items:flex-start; gap:.55rem;
+  padding:.62rem .82rem; border-radius:8px;
+  background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05);
+  cursor:pointer;
+  transition: background .22s ease,
+              border-color .22s ease,
+              transform .2s var(--spring),
+              box-shadow .22s ease,
+              opacity .22s ease;
+  will-change:transform;
+}
+.stop-item:hover  {
+  background:rgba(255,255,255,.07);
+  transform:translateX(3px);
+  box-shadow:0 2px 12px rgba(0,0,0,.2);
+}
+.stop-item:active { transform:translateX(1px) scale(.99); transition-duration:.08s; }
+.stop-item.active {
+  background:rgba(224,123,32,.11); border-color:rgba(224,123,32,.38);
+  box-shadow:0 0 0 1px rgba(224,123,32,.15) inset;
+}
+.stop-item.visited { opacity:.48; }
+.stop-item.visited:hover { opacity:.72; }
+
+/* List item animation on render */
+.stop-item.list-enter {
+  animation:listItemIn .32s var(--ease-out-expo) both;
+}
+@keyframes listItemIn {
+  from { opacity:0; transform:translateX(-12px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+
+.stop-num {
+  width:19px; height:19px; border-radius:50%; background:rgba(255,255,255,.1);
+  display:flex; align-items:center; justify-content:center;
+  font-size:.58rem; font-weight:700; flex-shrink:0; margin-top:2px; color:rgba(255,255,255,.38);
+  transition: background .3s var(--spring), color .25s ease, transform .25s var(--spring);
+}
+.stop-item:hover .stop-num { transform:scale(1.1); }
+.stop-item.active  .stop-num {
+  background:var(--saffron); color:#fff;
+  box-shadow:0 0 10px rgba(224,123,32,.5);
+}
+.stop-item.visited .stop-num { background:rgba(42,122,106,.4); color:#60d0b0; }
+
+.stop-item-info  { flex:1; min-width:0; }
+.stop-item-name  { font-size:.8rem; font-weight:600; color:rgba(255,255,255,.78); line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:color .2s ease; }
+.stop-item.active .stop-item-name { color:#fff; }
+.stop-item-date  { font-size:.65rem; color:rgba(255,255,255,.28); margin-top:.08rem; }
+.stop-item-emoji {
+  font-size:.9rem; flex-shrink:0; margin-top:2px;
+  transition:transform .3s var(--spring);
+}
+.stop-item:hover .stop-item-emoji { transform:scale(1.2) rotate(-5deg); }
+.stop-item.active .stop-item-emoji { transform:scale(1.15); }
+
+/* ── COST SUMMARY ── */
+.cost-summary {
+  margin-top:1.1rem; background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.09); border-radius:13px; padding:1.1rem;
+}
+.cost-summary h3 { font-family:'Cormorant Garamond',serif; font-size:1.12rem; font-weight:700; color:var(--gold); margin-bottom:.75rem; }
+.cost-line { display:flex; justify-content:space-between; padding:.3rem 0; border-bottom:1px solid rgba(255,255,255,.05); font-size:.73rem; transition:background .15s; }
+.cost-line:hover { background:rgba(255,255,255,.03); }
+.cost-line:last-of-type { border-bottom:none; }
+.cost-line-label { color:rgba(255,255,255,.52); }
+.cost-line-val   { font-weight:600; color:rgba(255,255,255,.85); }
+.cost-total {
+  margin-top:.75rem; padding:.8rem .9rem;
+  background:rgba(224,123,32,.1); border:1px solid rgba(224,123,32,.28);
+  border-radius:8px; display:flex; justify-content:space-between; align-items:center;
+  transition: background .3s ease, box-shadow .3s ease;
+}
+.cost-total:hover {
+  background:rgba(224,123,32,.15);
+  box-shadow:0 0 16px rgba(224,123,32,.12);
+}
+.cost-total-label { font-weight:600; color:rgba(255,255,255,.78); font-size:.82rem; }
+.cost-total-val   { font-family:'Cormorant Garamond',serif; font-size:1.35rem; font-weight:700; color:var(--saffron); }
+.cost-footnote    { font-size:.63rem; color:rgba(255,255,255,.24); margin-top:.55rem; line-height:1.65; }
+
+/* ── MAP ANIMATIONS ── */
+.route-seg { fill:none; stroke-linecap:round; stroke-linejoin:round; opacity:0; transition:opacity .55s var(--ease-out-expo); }
+.route-seg.shown { opacity:1; }
+@keyframes dashMove { to { stroke-dashoffset:-30; } }
+.route-active { animation:dashMove 1.4s linear infinite; }
+
+/* ── TOAST NOTIFICATION (Swiggy-style) ── */
+#toast {
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
+  background:rgba(20,45,35,.95); border:1px solid rgba(224,123,32,.35);
+  color:#fff; font-size:.78rem; font-weight:500; padding:.55rem 1.1rem;
+  border-radius:30px; z-index:999; pointer-events:none;
+  backdrop-filter:blur(12px);
+  box-shadow:0 8px 32px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.06) inset;
+  transition: transform .45s var(--spring), opacity .35s ease;
+  white-space:nowrap;
+}
+#toast.show {
+  transform:translateX(-50%) translateY(0);
+}
+
+/* ── ROUTE DRAW FLASH ── */
+@keyframes segFlash {
+  0%   { opacity:0; }
+  30%  { opacity:1; }
+  100% { opacity:1; }
+}
+.route-seg.route-draw { animation:segFlash .4s var(--ease-out-expo) both; }
+
+/* ── MOBILE ── */
+@media(max-width:800px){
+  html,body { height:auto; overflow:auto; }
+  .layout { grid-template-columns:1fr; height:auto; overflow:visible; }
+  .map-panel { height:56vw; min-height:220px; overflow:hidden; flex-shrink:0; }
+  .info-panel { height:auto; overflow:visible; }
+  #toast { bottom:16px; font-size:.72rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<div class="header">
+  <div class="header-tag">✦ June 2026</div>
+  <h1><em>Kashmir</em></h1>
+  <p class="header-meta">1 June → 11 June &nbsp;·&nbsp; 11 Days &nbsp;·&nbsp; HYD → Delhi → Jammu → Srinagar → Gulmarg → Pahalgam → Sonamarg → HYD</p>
+</div>
+
+<div class="layout">
+
+  <!-- LEFT: MAP -->
+  <div class="map-panel">
+    <div class="map-title">▸ India Route Map — Click to advance</div>
+    <div class="map-wrap">
+      <svg id="svg-map" viewBox="0 0 420 560" xmlns="http://www.w3.org/2000/svg"></svg>
+    </div>
+    <div class="btn-row">
+      <button class="btn-next" id="btn-next" onclick="nextStep()">
+        <span id="btn-icon">▶</span>
+        <span id="btn-label">Start Journey</span>
+      </button>
+      <button class="btn-reset" onclick="resetJourney()">↺ Reset</button>
+    </div>
+    <div class="step-counter" id="step-counter">Press to begin the trip ✈️</div>
+  </div>
+
+  <!-- RIGHT: INFO -->
+  <div class="info-panel" id="info-panel">
+
+    <div class="journey-bar">
+      <div class="journey-bar-label">Journey Progress</div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+      <div class="progress-steps" id="progress-steps"></div>
+    </div>
+
+    <!-- Current stop card — always first/visible; panel scrolls to top on each step -->
+    <div class="current-stop" id="current-stop">
+      <div class="stop-phase">📍 Ready to Begin</div>
+      <div class="stop-name" style="font-size:1.3rem;color:rgba(255,255,255,.33)">Press "Start Journey"</div>
+      <div class="stop-date">Your Kashmir adventure is one click away!</div>
+      <div class="stop-details">
+        <div class="stop-detail-row">
+          <span class="stop-icon">🗺️</span>
+          <span class="stop-text">Click the button to travel step by step —
+            <strong>Hyderabad → Delhi → Jammu → Srinagar → Gulmarg → Pahalgam → Sonamarg</strong>
+            and back home. Each click draws the next leg live on the map!
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stops-list" id="stops-list"></div>
+
+    <div class="cost-summary">
+      <h3>💰 Cost Estimate Per Person</h3>
+      <div class="cost-line"><span class="cost-line-label">🚂 HYD → Delhi (Dakshin SF Exp.)</span><span class="cost-line-val">₹755</span></div>
+      <div class="cost-line"><span class="cost-line-label">🚂 Delhi → Jammu SVDK (Jammu Mail)</span><span class="cost-line-val">₹1,040</span></div>
+      <div class="cost-line"><span class="cost-line-label">🚂 Jammu SVDK → Srinagar (Train)</span><span class="cost-line-val">₹250</span></div>
+      <div class="cost-line"><span class="cost-line-label">🚂 Srinagar → SVDK → Delhi (Return)</span><span class="cost-line-val">₹745</span></div>
+      <div class="cost-line"><span class="cost-line-label">🚂 Delhi → HYD (Telangana Exp.)</span><span class="cost-line-val">₹755</span></div>
+      <div class="cost-line"><span class="cost-line-label">🚌 Local Transport (~5 legs × ₹350)</span><span class="cost-line-val">₹1,750</span></div>
+      <div class="cost-line"><span class="cost-line-label">🏨 Budget Stay: 5 nights × ₹500</span><span class="cost-line-val">₹2,500</span></div>
+      <div class="cost-line"><span class="cost-line-label">🏨 Comfort Stay: 5 nights × ₹800</span><span class="cost-line-val">₹4,000</span></div>
+      <div class="cost-total">
+        <div>
+          <div class="cost-total-label">Total Per Person</div>
+          <div style="font-size:.63rem;color:rgba(255,255,255,.32);margin-top:2px">excl. food &amp; shopping</div>
+        </div>
+        <div class="cost-total-val">₹7,795–₹9,295</div>
+      </div>
+      <p class="cost-footnote">* Sleeper class fares (approx.). Add ₹200–300/day for food; ₹400–800 for activities &amp; entry fees.</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+// ── Real India GeoJSON ──────────────────────────────────────────────────
+const indiaGeo = {"type":"Feature","properties":{"name":"India"},"geometry":{"type":"Polygon","coordinates":[[[77.837451,35.49401],[78.912269,34.321936],[78.811086,33.506198],[79.208892,32.994395],[79.176129,32.48378],[78.458446,32.618164],[78.738894,31.515906],[79.721367,30.882715],[81.111256,30.183481],[80.476721,29.729865],[80.088425,28.79447],[81.057203,28.416095],[81.999987,27.925479],[83.304249,27.364506],[84.675018,27.234901],[85.251779,26.726198],[86.024393,26.630985],[87.227472,26.397898],[88.060238,26.414615],[88.174804,26.810405],[88.043133,27.445819],[88.120441,27.876542],[88.730326,28.086865],[88.814248,27.299316],[88.835643,27.098966],[89.744528,26.719403],[90.373275,26.875724],[91.217513,26.808648],[92.033484,26.83831],[92.103712,27.452614],[91.696657,27.771742],[92.503119,27.896876],[93.413348,28.640629],[94.56599,29.277438],[95.404802,29.031717],[96.117679,29.452802],[96.586591,28.83098],[96.248833,28.411031],[97.327114,28.261583],[97.402561,27.882536],[97.051989,27.699059],[97.133999,27.083774],[96.419366,27.264589],[95.124768,26.573572],[95.155153,26.001307],[94.603249,25.162495],[94.552658,24.675238],[94.106742,23.850741],[93.325188,24.078556],[93.286327,23.043658],[93.060294,22.703111],[93.166128,22.27846],[92.672721,22.041239],[92.146035,23.627499],[91.869928,23.624346],[91.706475,22.985264],[91.158963,23.503527],[91.46773,24.072639],[91.915093,24.130414],[92.376202,24.976693],[91.799596,25.147432],[90.872211,25.132601],[89.920693,25.26975],[89.832481,25.965082],[89.355094,26.014407],[88.563049,26.446526],[88.209789,25.768066],[88.931554,25.238692],[88.306373,24.866079],[88.084422,24.501657],[88.69994,24.233715],[88.52977,23.631142],[88.876312,22.879146],[89.031961,22.055708],[88.888766,21.690588],[88.208497,21.703172],[86.975704,21.495562],[87.033169,20.743308],[86.499351,20.151638],[85.060266,19.478579],[83.941006,18.30201],[83.189217,17.671221],[82.192792,17.016636],[82.191242,16.556664],[81.692719,16.310219],[80.791999,15.951972],[80.324896,15.899185],[80.025069,15.136415],[80.233274,13.835771],[80.286294,13.006261],[79.862547,12.056215],[79.857999,10.357275],[79.340512,10.308854],[78.885345,9.546136],[79.18972,9.216544],[78.277941,8.933047],[77.941165,8.252959],[77.539898,7.965535],[76.592979,8.899276],[76.130061,10.29963],[75.746467,11.308251],[75.396101,11.781245],[74.864816,12.741936],[74.616717,13.992583],[74.443859,14.617222],[73.534199,15.990652],[73.119909,17.92857],[72.820909,19.208234],[72.824475,20.419503],[72.630533,21.356009],[71.175273,20.757441],[70.470459,20.877331],[69.16413,22.089298],[69.644928,22.450775],[69.349597,22.84318],[68.176645,23.691965],[68.842599,24.359134],[71.04324,24.356524],[70.844699,25.215102],[70.282873,25.722229],[70.168927,26.491872],[69.514393,26.940966],[70.616496,27.989196],[71.777666,27.91318],[72.823752,28.961592],[73.450638,29.976413],[74.42138,30.979815],[74.405929,31.692639],[75.258642,32.271105],[74.451559,32.7649],[74.104294,33.441473],[73.749948,34.317699],[74.240203,34.748887],[75.757061,34.504923],[76.871722,34.653544],[77.837451,35.49401]]]}};
+const sriLankaGeo = {"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[81.787959,7.523055],[81.637322,6.481775],[81.21802,6.197141],[80.348357,5.96837],[79.872469,6.763463],[79.695167,8.200843],[80.147801,9.824078],[80.838818,9.268427],[81.304319,8.564206],[81.787959,7.523055]]]}};
+
+const cityDefs = [
+  { id:'hyd',  lon:78.4867, lat:17.3850, label:'Hyderabad',    color:'#e07b20', r:5.5, dx:9,  dy:3,  anchor:'start' },
+  { id:'del',  lon:77.2090, lat:28.6139, label:'Delhi (NZM)',  color:'#6ab0e8', r:5,   dx:8,  dy:3,  anchor:'start' },
+  { id:'jam',  lon:74.8570, lat:32.7266, label:'Jammu (SVDK)', color:'#80c8f8', r:4.5, dx:8,  dy:3,  anchor:'start' },
+  { id:'sri',  lon:74.7973, lat:34.0837, label:'Srinagar ⛵',  color:'#40d0a8', r:6.5, dx:-9, dy:-6, anchor:'end', innerFill:'#163a2a', stroke:'#40d0a8' },
+  { id:'gul',  lon:74.3825, lat:34.0500, label:'Gulmarg ⛰️',   color:'#a0e880', r:4,   dx:-8, dy:4,  anchor:'end' },
+  { id:'pahl', lon:75.3153, lat:34.0159, label:'Pahalgam 🌿',  color:'#78e058', r:4.2, dx:8,  dy:4,  anchor:'start' },
+  { id:'son',  lon:75.2975, lat:34.3090, label:'Sonamarg ❄️',  color:'#f0d040', r:4.2, dx:8,  dy:4,  anchor:'start' },
+];
+
+const routeDefs = [
+  { id:'seg-0', coords:[[78.4867,17.3850],[77.2090,28.6139]], color:'#e07b20',              w:2.5, dash:'7,4' },
+  { id:'seg-1', coords:[[77.2090,28.6139],[74.8570,32.7266]], color:'#6ab0e8',              w:2.5, dash:'7,4' },
+  { id:'seg-2', coords:[[74.8570,32.7266],[74.7973,34.0837]], color:'#40d0a8',              w:2.2, dash:'5,3' },
+  { id:'seg-3', coords:[[74.7973,34.0837],[74.3825,34.0500]], color:'#a0e880',              w:2,   dash:'4,3' },
+  { id:'seg-4', coords:[[74.3825,34.0500],[74.7973,34.0837]], color:'#a0e880',              w:1.6, dash:'3,3' },
+  { id:'seg-5', coords:[[74.7973,34.0837],[75.3153,34.0159]], color:'#78e058',              w:2,   dash:'4,3' },
+  { id:'seg-6', coords:[[75.3153,34.0159],[74.7973,34.0837]], color:'#78e058',              w:1.6, dash:'3,3' },
+  { id:'seg-7', coords:[[74.7973,34.0837],[74.8570,32.7266],[77.2090,28.6139]], color:'rgba(255,255,255,.28)', w:1.6, dash:'4,4' },
+  { id:'seg-8', coords:[[77.2090,28.6139],[78.4867,17.3850]], color:'rgba(224,123,32,.48)', w:1.6, dash:'5,4' },
+];
+
+(function buildMap(){
+  const svg=d3.select('#svg-map'), W=420, H=560;
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','#152e3e');
+
+  const proj=d3.geoMercator().fitExtent([[18,14],[W-18,H-56]],indiaGeo);
+  const path=d3.geoPath().projection(proj);
+
+  svg.append('path').datum(indiaGeo).attr('d',path).attr('fill','#2a5c42').attr('stroke','#1b4030').attr('stroke-width',.8);
+
+  // J&K tint
+  svg.append('path').datum({type:'Feature',geometry:{type:'Polygon',coordinates:[
+    [[73.5,36.5],[75.5,37.0],[77.5,36.5],[79.2,35.5],[79.1,33.5],[78.5,32.6],
+     [78.0,32.2],[76.9,34.7],[75.8,34.5],[74.3,34.9],[73.8,34.5],[73.5,33.0],
+     [72.3,34.2],[71.8,35.2],[72.8,36.2],[73.5,36.5]]
+  ]}}).attr('d',path).attr('fill','#3a7255').attr('stroke','none').attr('opacity',.85);
+
+  // Telangana tint
+  svg.append('path').datum({type:'Feature',geometry:{type:'Polygon',coordinates:[
+    [[77.2,19.1],[78.5,18.7],[80.0,18.8],[81.2,18.2],[81.5,17.5],[80.8,16.7],
+     [80.0,16.3],[79.0,17.0],[77.9,17.9],[77.0,17.5],[76.8,18.0],[77.2,19.1]]
+  ]}}).attr('d',path).attr('fill','#366050').attr('stroke','none').attr('opacity',.75);
+
+  svg.append('path').datum(sriLankaGeo).attr('d',path).attr('fill','#2a5c42').attr('stroke','#1b4030').attr('stroke-width',.6).attr('opacity',.6);
+
+  [[92.7,11.7],[92.5,12.5]].forEach(([lo,la],i)=>{
+    const [x,y]=proj([lo,la]);
+    svg.append('circle').attr('cx',x).attr('cy',y).attr('r',i?3:4).attr('fill','#2a5c42').attr('stroke','#1b4030').attr('stroke-width',.5).attr('opacity',.5);
+  });
+
+  const line=d3.line().x(d=>proj(d)[0]).y(d=>proj(d)[1]).curve(d3.curveCatmullRom.alpha(.5));
+  routeDefs.forEach(r=>{
+    svg.append('path').datum(r.coords).attr('id',r.id).attr('class','route-seg')
+       .attr('d',line).attr('fill','none').attr('stroke',r.color).attr('stroke-width',r.w)
+       .attr('stroke-dasharray',r.dash).attr('stroke-linecap','round').attr('stroke-linejoin','round').attr('opacity',0);
+  });
+
+  cityDefs.forEach(c=>{
+    const [cx,cy]=proj([c.lon,c.lat]);
+    svg.append('circle').attr('id','ping-'+c.id).attr('cx',cx).attr('cy',cy).attr('r',c.r+1)
+       .attr('fill','none').attr('stroke',c.color).attr('stroke-width',1.8).attr('opacity',0);
+    svg.append('circle').attr('id','dot-'+c.id).attr('cx',cx).attr('cy',cy).attr('r',c.r)
+       .attr('fill',c.innerFill||c.color).attr('stroke',c.stroke||'white')
+       .attr('stroke-width',c.innerFill?2.5:2).attr('opacity',0);
+    svg.append('text').attr('id','lbl-'+c.id).attr('x',cx+c.dx).attr('y',cy+c.dy)
+       .attr('font-family','Outfit,sans-serif').attr('font-weight','700')
+       .attr('font-size',['hyd','del'].includes(c.id)?9:8).attr('fill','rgba(255,255,255,.9)')
+       .attr('text-anchor',c.anchor||'start').attr('opacity',0).text(c.label);
+  });
+
+  // Compass
+  const comp=svg.append('g').attr('transform',`translate(${W-43},42)`);
+  comp.append('circle').attr('r',15).attr('fill','rgba(255,255,255,.05)').attr('stroke','rgba(255,255,255,.15)').attr('stroke-width',1);
+  [['N',0,-10],['S',0,14],['W',-11,3],['E',11,3]].forEach(([t,x,y])=>{
+    comp.append('text').attr('x',x).attr('y',y).attr('text-anchor','middle')
+        .attr('font-family','Outfit,sans-serif').attr('font-size',t==='N'?8:7)
+        .attr('fill',t==='N'?'rgba(255,255,255,.7)':'rgba(255,255,255,.3)').text(t);
+  });
+  comp.append('polygon').attr('points','0,-9 -2.5,0 0,2.5 2.5,0').attr('fill','rgba(255,255,255,.75)');
+  comp.append('polygon').attr('points','0,9 -2.5,0 0,-2.5 2.5,0').attr('fill','rgba(255,255,255,.25)');
+
+  // Mountain deco
+  [[74.2,34.7,'⛰',13],[74.9,35.1,'🏔',11],[75.5,35.0,'🏔',10]].forEach(([lo,la,em,fs])=>{
+    const [x,y]=proj([lo,la]);
+    svg.append('text').attr('x',x).attr('y',y).attr('font-size',fs).attr('opacity',.3).text(em);
+  });
+
+  // Legend
+  const leg=svg.append('g').attr('transform',`translate(14,${H-40})`);
+  leg.append('rect').attr('width',142).attr('height',30).attr('rx',6).attr('fill','rgba(0,0,0,.42)');
+  leg.append('line').attr('x1',9).attr('y1',10).attr('x2',27).attr('y2',10).attr('stroke','#e07b20').attr('stroke-width',2).attr('stroke-dasharray','5,3');
+  leg.append('text').attr('x',33).attr('y',13.5).attr('font-size',7.5).attr('font-family','Outfit,sans-serif').attr('fill','rgba(255,255,255,.55)').text('Outward route');
+  leg.append('line').attr('x1',9).attr('y1',23).attr('x2',27).attr('y2',23).attr('stroke','rgba(255,255,255,.3)').attr('stroke-width',1.5).attr('stroke-dasharray','4,3');
+  leg.append('text').attr('x',33).attr('y',26.5).attr('font-size',7.5).attr('font-family','Outfit,sans-serif').attr('fill','rgba(255,255,255,.55)').text('Return route');
+})();
+</script>
+
+<script>
+// ── Trip data ───────────────────────────────────────────────────────────
+const stops = [
+  {
+    id:'hyd', label:'HYD', emoji:'🏙️',
+    phase:'DEPARTURE — 1 June 2026', name:'Hyderabad, Telangana',
+    date:'Monday, 1 June 2026 · Night',
+    details:[
+      {icon:'🚂', text:'<strong>12721 Dakshin SF Express</strong> departs HYB at 23:00'},
+      {icon:'⏱️', text:'~28h 45m journey → arrives Delhi NZM at 03:45 AM next day'},
+    ],
+    tags:[{cls:'tag-train',t:'🎫 Train: ₹755/person'}],
+    segs:['seg-0'], dots:['dot-hyd'], pings:['ping-hyd'], lbls:['lbl-hyd']
+  },
+  {
+    id:'del1', label:'Delhi', emoji:'🏛️',
+    phase:'DAY 3 — 3 June', name:'Delhi (NZM) — Transit Day',
+    date:'Wednesday, 3 June 2026',
+    details:[
+      {icon:'🌅', text:'Arrive Nizamuddin ~03:45 AM. Freshen up, grab chai, rest.'},
+      {icon:'🛍️', text:'Optional: explore nearby, light shopping before evening train.'}
+    ],
+    tags:[{cls:'tag-stay',t:'🏨 Rest near station'}],
+    segs:[], dots:[], pings:['ping-del'], lbls:['lbl-del']
+  },
+  {
+    id:'del2', label:'Del→Jam', emoji:'🚂',
+    phase:'DAY 3 — 3 June · Evening', name:'Delhi → Jammu',
+    date:'Wednesday, 3 June 2026 · Night',
+    details:[
+      {icon:'🚂', text:'<strong>20433 Jammu Mail</strong> — departs DLI at 20:10'},
+      {icon:'⏱️', text:'~13h journey → arrives SVDK by 09:20 AM next morning'},
+      {icon:'⚠️', text:'Must reach Jammu before 12 PM to catch onward Srinagar train!'}
+    ],
+    tags:[{cls:'tag-train',t:'🎫 Train: ₹1,040/person'}],
+    segs:['seg-1'], dots:['dot-del'], pings:[], lbls:[]
+  },
+  {
+    id:'jam', label:'Jammu', emoji:'🛤️',
+    phase:'DAY 4 — 4 June', name:'Jammu (SVDK) → Srinagar',
+    date:'Thursday, 4 June 2026',
+    details:[
+      {icon:'🚂', text:'<strong>04687 SVDK-BDGM Spl</strong> — departs 13:45, arrives SINA ~19:36'},
+      {icon:'🏔️', text:'~6 hr scenic ride through Pir Panjal tunnels into Kashmir valley!'},
+      {icon:'🏨', text:'Arrive Srinagar at night — check-in &amp; rest well.'}
+    ],
+    tags:[{cls:'tag-bus',t:'🚌 ₹350/person'},{cls:'tag-stay',t:'🏨 ₹500–800/person'}],
+    segs:['seg-2'], dots:['dot-jam'], pings:['ping-jam'], lbls:['lbl-jam']
+  },
+  {
+    id:'gul1', label:'Gulmarg', emoji:'⛰️',
+    phase:'DAY 5 — 5 June', name:'Gulmarg',
+    date:'Friday, 5 June 2026',
+    details:[
+      {icon:'🚠', text:'Ride the Gulmarg Gondola — one of the highest cable cars in the world.'},
+      {icon:'🌄', text:'Explore lush green meadows &amp; enjoy stunning Himalayan views.'},
+      {icon:'🏞️', text:'Visit Alpather Lake or take peaceful nature walks.'}
+    ],
+    tags:[{cls:'tag-bus',t:'🚌 ₹350/person'},{cls:'tag-stay',t:'🏨 ₹500–800/night'}],
+    segs:['seg-3'], dots:['dot-gul'], pings:['ping-gul'], lbls:['lbl-gul']
+  },
+  {
+    id:'pahl', label:'Pahalgam', emoji:'🌿',
+    phase:'DAY 6 — 6 June', name:'Pahalgam',
+    date:'Saturday, 6 June 2026',
+    details:[
+      {icon:'🌿', text:'<strong>Pahalgam</strong> — lush green valley, Lidder river, pine forests.'},
+      {icon:'🏞️', text:'Betaab Valley, Aru Valley, Baisaran ("Mini Switzerland") meadow.'},
+      {icon:'🐎', text:'Optional: pony rides, trout fishing, river-side picnic!'}
+    ],
+    tags:[{cls:'tag-bus',t:'🚌 ₹350/person'},{cls:'tag-stay',t:'🏨 ₹500–800/person'}],
+    segs:['seg-5'], dots:['dot-pahl'], pings:['ping-pahl'], lbls:['lbl-pahl']
+  },
+  {
+    id:'son', label:'Sonamarg', emoji:'❄️',
+    phase:'DAY 7 — 7 June', name:'Sonamarg',
+    date:'Sunday, 7 June 2026',
+    details:[
+      {icon:'❄️', text:'<strong>Sonamarg</strong> — golden meadows, glaciers, snow-capped peaks at 2,730 m.'},
+      {icon:'🧊', text:'Thajiwas Glacier trek / pony ride — touch real glacier ice!'},
+      {icon:'🌄', text:'Zoji La pass views; Krishnasar &amp; Gadsar lakes (weather permitting).'}
+    ],
+    tags:[{cls:'tag-bus',t:'🚌 ₹350/person'},{cls:'tag-stay',t:'🏨 ₹500–800/person'}],
+    segs:['seg-6'], dots:['dot-son'], pings:['ping-son'], lbls:['lbl-son']
+  },
+  {
+    id:'sri2', label:'Last Day', emoji:'🌅',
+    phase:'DAY 8 — 8 June', name:'Srinagar — Final Evening',
+    date:'Monday, 8 June 2026',
+    details:[
+      {icon:'⛵', text:'Shikara ride on Dal Lake at sunrise — unmissable!'},
+      {icon:'🌷', text:'Mughal Gardens: Shalimar Bagh, Nishat Bagh, Chashme Shahi.'},
+      {icon:'🕌', text:'Hazratbal Shrine, Shankaracharya Temple, Lal Chowk market.'},
+      {icon:'🎒', text:'Pack up. Final Kashmiri shopping — pashmina, saffron, dry fruits.'}
+    ],
+    tags:[{cls:'tag-stay',t:'🏨 ₹500–800/person'}],
+    segs:[], dots:['dot-sri'], pings:['ping-sri'], lbls:['lbl-sri']
+  },
+  {
+    id:'ret', label:'Return', emoji:'🔙',
+    phase:'DAY 9 — 9 June', name:'Return: Srinagar → SVDK → Delhi',
+    date:'Tuesday, 9 June 2026',
+    details:[
+      {icon:'🚂', text:'<strong>04688 BDGM-SVDK Spl</strong> — departs SINA 07:35, arrives SVDK 13:00.'},
+      {icon:'🚂', text:'Connect SVDK → Delhi evening train → arrives Delhi ~04:00 AM.'},
+    ],
+    tags:[{cls:'tag-train',t:'🎫 Train: ₹755/person'},{cls:'tag-bus',t:'🚌 ₹350/person'}],
+    segs:['seg-7'], dots:[], pings:[], lbls:[]
+  },
+  {
+    id:'del3', label:'Delhi+', emoji:'🏛️',
+    phase:'DAY 10 — 10 June', name:'Delhi — Layover',
+    date:'Wednesday, 10 June 2026',
+    details:[
+      {icon:'🌄', text:'Arrive Delhi ~4–5 AM. Rest, explore, grab a meal.'},
+      {icon:'🚂', text:'Evening Telangana Express departs 16:00 from NDLS.'}
+    ],
+    tags:[{cls:'tag-bus',t:'🚌 ₹350/person'},{cls:'tag-stay',t:'🏨 If needed: ₹500–800'}],
+    segs:[], dots:[], pings:[], lbls:[]
+  },
+  {
+    id:'home', label:'Home! 🎉', emoji:'🎉',
+    phase:'DAYS 10–11 — 10–11 June', name:'Delhi → Hyderabad — Home!',
+    date:'Depart 10 June 16:00 → Arrive 11 June 17:10',
+    details:[
+      {icon:'🚂', text:'<strong>12724 Telangana Express</strong> — departs NDLS 16:00, arrives HYB ~17:10 next day.'},
+      {icon:'🎉', text:'Trip complete! 🏔️ Memories made, mountains conquered!'},
+    ],
+    tags:[{cls:'tag-train',t:'🎫 Train: ₹755/person'}],
+    segs:['seg-8'], dots:['dot-hyd'], pings:[], lbls:[]
+  }
+];
+
+// ── Helpers ──────────────────────────────────────────────────────────────
+let currentStep = -1;
+const shownSegs = new Set();
+const $     = id => document.getElementById(id);
+const show  = (id, v=1)    => { const e=$(id); if(e) e.style.opacity=v; };
+const addCl = (id, c)      => { const e=$(id); if(e) e.classList.add(c); };
+const rmCl  = (id, c)      => { const e=$(id); if(e) e.classList.remove(c); };
+
+// ── Toast notification (Swiggy-style) ────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t=$('toast'); t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+// ── Ripple on button click ────────────────────────────────────────────────
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.btn-next, .btn-reset');
+  if (!btn || btn.disabled) return;
+  const rect = btn.getBoundingClientRect();
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  r.style.cssText = `width:${rect.width}px;height:${rect.width}px;left:${e.clientX-rect.left-rect.width/2}px;top:${e.clientY-rect.top-rect.width/2}px`;
+  btn.appendChild(r);
+  r.addEventListener('animationend', ()=>r.remove());
+});
+
+function buildProgress(){
+  stops.forEach((s,i)=>{
+    const sp=document.createElement('span');
+    sp.className='progress-step'; sp.textContent=s.label; sp.id='ps-'+i;
+    sp.onclick=()=>jumpTo(i);
+    $('progress-steps').appendChild(sp);
+  });
+}
+
+function renderStep(step){
+  const s=stops[step];
+
+  // Routes: cumulative; animate only newest
+  shownSegs.forEach(id=>{ addCl(id,'shown'); rmCl(id,'route-active'); rmCl(id,'route-draw'); });
+  s.segs.forEach(id=>{
+    shownSegs.add(id);
+    const el=$(id);
+    if(el){
+      el.classList.remove('shown','route-draw');
+      void el.offsetWidth; // force reflow
+      el.classList.add('shown','route-active','route-draw');
+    }
+  });
+
+  // Map pulse on new route
+  if(s.segs.length){
+    const mw=document.querySelector('.map-wrap');
+    mw.classList.add('map-pulse');
+    setTimeout(()=>mw.classList.remove('map-pulse'), 700);
+  }
+
+  // Dots / labels: cumulative
+  s.dots.forEach(id=>show(id));
+  s.lbls.forEach(id=>show(id));
+
+  // Pings: current stop only
+  stops.forEach((st,i)=>{ if(i<step) st.pings.forEach(id=>show(id,0)); });
+  s.pings.forEach(id=>show(id));
+
+  // Update card content with exit → enter animation
+  const card=$('current-stop');
+  card.classList.add('card-exit');
+  setTimeout(()=>{
+    card.classList.remove('card-exit');
+    card.innerHTML=`
+      <div class="stop-phase">${s.phase}</div>
+      <div class="stop-name">${s.name}</div>
+      <div class="stop-date">📅 ${s.date}</div>
+      <div class="stop-details">${s.details.map(d=>`
+        <div class="stop-detail-row">
+          <span class="stop-icon">${d.icon}</span>
+          <span class="stop-text">${d.text}</span>
+        </div>`).join('')}
+      </div>
+      <div class="cost-tags">${s.tags.map(t=>`<span class="cost-tag ${t.cls}">${t.t}</span>`).join('')}</div>
+    `;
+    card.classList.add('card-enter');
+    // Shimmer swipe
+    void card.offsetWidth;
+    card.classList.add('card-enter');
+    setTimeout(()=>card.classList.remove('card-enter'),700);
+  }, 180);
+
+  // Scroll info panel to top smoothly
+  $('info-panel').scrollTo({ top:0, behavior:'smooth' });
+
+  // Progress bar with overshoot feel
+  $('progress-fill').style.width=((step+1)/stops.length*100)+'%';
+  stops.forEach((_,i)=>{
+    const ps=$('ps-'+i); if(!ps) return;
+    const wasActive=ps.classList.contains('active');
+    ps.className='progress-step';
+    if(i<step)       ps.classList.add('done');
+    else if(i===step){
+      ps.classList.add('active');
+      if(!wasActive){ ps.classList.add('just-activated'); ps.addEventListener('animationend',()=>ps.classList.remove('just-activated'),{once:true}); }
+    }
+  });
+
+  renderList(step);
+
+  // Button label with micro-animation
+  const btn=$('btn-next');
+  const lbl=$('btn-label'), icon=$('btn-icon');
+  if(step>=stops.length-1){
+    lbl.textContent='Trip Complete! 🎉';
+    icon.textContent='✓';
+    btn.disabled=true;
+    showToast('🎉 Journey complete! What a trip!');
+  } else {
+    lbl.textContent='Next: '+stops[step+1].name.split('—')[0].trim()+' →';
+    icon.textContent='▶';
+    btn.disabled=false;
+  }
+
+  // Step counter bump
+  const sc=$('step-counter');
+  sc.textContent=`Stop ${step+1} of ${stops.length} — ${s.label}`;
+  sc.classList.remove('bump');
+  void sc.offsetWidth;
+  sc.classList.add('bump');
+  sc.addEventListener('animationend',()=>sc.classList.remove('bump'),{once:true});
+
+  // Toast for key stops
+  const toasts={ hyd:'🚂 Departing Hyderabad!', del1:'🏛️ Arrived Delhi!', jam:'🏔️ Entering Kashmir Valley!', sri1:'⛵ Welcome to Srinagar!', gul1:'⛰️ Gulmarg awaits!', pahl:'🌿 Valley of Pahalgam!', son:'❄️ Sonamarg — Meadow of Gold!', home:'🎉 Welcome Home!' };
+  if(toasts[s.id]) setTimeout(()=>showToast(toasts[s.id]), 300);
+}
+
+function renderList(activeStep){
+  const list=$('stops-list'); list.innerHTML='';
+  stops.forEach((s,i)=>{
+    const item=document.createElement('div');
+    item.className='stop-item list-enter'+(i===activeStep?' active':'')+(i<activeStep?' visited':'');
+    item.style.animationDelay=(i*0.035)+'s';
+    item.innerHTML=`
+      <span class="stop-item-emoji">${s.emoji}</span>
+      <div class="stop-num">${i+1}</div>
+      <div class="stop-item-info">
+        <div class="stop-item-name">${s.name}</div>
+        <div class="stop-item-date">${s.date}</div>
+      </div>`;
+    item.onclick=()=>jumpTo(i);
+    list.appendChild(item);
+    // Remove class after animation so re-renders are clean
+    item.addEventListener('animationend',()=>item.classList.remove('list-enter'),{once:true});
+  });
+}
+
+function nextStep(){
+  if(currentStep<stops.length-1){ currentStep++; renderStep(currentStep); }
+}
+
+function jumpTo(step){
+  document.querySelectorAll('.route-seg').forEach(e=>e.classList.remove('shown','route-active','route-draw'));
+  document.querySelectorAll('[id^="dot-"],[id^="lbl-"],[id^="ping-"]').forEach(e=>e.style.opacity=0);
+  shownSegs.clear();
+  for(let i=0;i<=step;i++){
+    stops[i].segs.forEach(id=>{ shownSegs.add(id); addCl(id,'shown'); });
+    stops[i].dots.forEach(id=>show(id));
+    stops[i].lbls.forEach(id=>show(id));
+  }
+  currentStep=step; renderStep(currentStep);
+}
+
+function resetJourney(){
+  currentStep=-1; shownSegs.clear();
+  document.querySelectorAll('.route-seg').forEach(e=>e.classList.remove('shown','route-active','route-draw'));
+  document.querySelectorAll('[id^="dot-"],[id^="lbl-"],[id^="ping-"]').forEach(e=>e.style.opacity=0);
+  $('progress-fill').style.width='0%';
+  document.querySelectorAll('.progress-step').forEach(e=>e.className='progress-step');
+  $('step-counter').textContent='Press to begin the trip ✈️';
+
+  const card=$('current-stop');
+  card.classList.add('card-exit');
+  setTimeout(()=>{
+    card.classList.remove('card-exit');
+    card.innerHTML=`
+      <div class="stop-phase">📍 Ready to Begin</div>
+      <div class="stop-name" style="font-size:1.3rem;color:rgba(255,255,255,.33)">Press "Start Journey"</div>
+      <div class="stop-date">Your Kashmir adventure is one click away!</div>
+      <div class="stop-details">
+        <div class="stop-detail-row">
+          <span class="stop-icon">🗺️</span>
+          <span class="stop-text">Click to travel step by step —
+            <strong>Hyderabad → Delhi → Jammu → Srinagar → Gulmarg → Pahalgam → Sonamarg</strong>
+            and back home!
+          </span>
+        </div>
+      </div>`;
+    card.classList.add('card-enter');
+    setTimeout(()=>card.classList.remove('card-enter'),700);
+  }, 180);
+
+  $('btn-label').textContent='Start Journey';
+  $('btn-icon').textContent='▶';
+  $('btn-next').disabled=false;
+  $('info-panel').scrollTo({ top:0, behavior:'smooth' });
+  renderList(-1);
+  showToast('↺ Journey reset — ready to explore!');
+}
+
+buildProgress();
+renderList(-1);
+</script>
+</body>
+</html>
