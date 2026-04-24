@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Kashmir Trip 2026 🏔️</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -21,11 +21,14 @@
 }
 
 /* ── PAGE SHELL ── */
-html, body { height:100%; overflow:hidden; }
+html { height:100%; height:-webkit-fill-available; }
 body {
   font-family:'Outfit',sans-serif;
   background:var(--pine); color:var(--snow);
   display:flex; flex-direction:column;
+  min-height:100vh;
+  min-height:-webkit-fill-available;
+  overflow-x:hidden;
 }
 
 /* ── HEADER ── */
@@ -190,9 +193,9 @@ body {
 /* ── RIGHT: INFO PANEL ── */
 .info-panel {
   height:100%; overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
   padding:1.1rem;
   background:var(--pine);
-  scroll-behavior:smooth;
 }
 .info-panel::-webkit-scrollbar { width:3px; }
 .info-panel::-webkit-scrollbar-thumb {
@@ -434,6 +437,7 @@ body {
   color:#fff; font-size:.78rem; font-weight:500; padding:.55rem 1.1rem;
   border-radius:30px; z-index:999; pointer-events:none;
   backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
   box-shadow:0 8px 32px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.06) inset;
   transition: transform .45s var(--spring), opacity .35s ease;
   white-space:nowrap;
@@ -456,7 +460,13 @@ body {
   .layout { grid-template-columns:1fr; height:auto; overflow:visible; }
   .map-panel { height:56vw; min-height:220px; overflow:hidden; flex-shrink:0; }
   .info-panel { height:auto; overflow:visible; }
-  #toast { bottom:16px; font-size:.72rem; }
+  #toast { bottom:16px; bottom:calc(16px + env(safe-area-inset-bottom)); font-size:.72rem; }
+}
+/* ── DESKTOP LAYOUT FIX ── */
+@media(min-width:801px){
+  html { overflow:hidden; }
+  body { height:100vh; height:100dvh; overflow:hidden; }
+  .layout { flex:1; min-height:0; overflow:hidden; }
 }
 </style>
 </head>
@@ -823,8 +833,9 @@ function renderStep(step){
     shownSegs.add(id);
     const el=$(id);
     if(el){
-      el.classList.remove('shown','route-draw');
-      void el.offsetWidth; // force reflow
+      el.classList.remove('shown','route-draw','route-active');
+      // Force reflow - Safari-compatible approach
+      el.getBoundingClientRect();
       el.classList.add('shown','route-active','route-draw');
     }
   });
@@ -861,9 +872,8 @@ function renderStep(step){
       </div>
       <div class="cost-tags">${s.tags.map(t=>`<span class="cost-tag ${t.cls}">${t.t}</span>`).join('')}</div>
     `;
-    card.classList.add('card-enter');
-    // Shimmer swipe
-    void card.offsetWidth;
+    // Force reflow (Safari-compatible) then animate
+    card.getBoundingClientRect();
     card.classList.add('card-enter');
     setTimeout(()=>card.classList.remove('card-enter'),700);
   }, 180);
@@ -904,7 +914,7 @@ function renderStep(step){
   const sc=$('step-counter');
   sc.textContent=`Stop ${step+1} of ${stops.length} — ${s.label}`;
   sc.classList.remove('bump');
-  void sc.offsetWidth;
+  sc.getBoundingClientRect(); // Safari-compatible reflow
   sc.classList.add('bump');
   sc.addEventListener('animationend',()=>sc.classList.remove('bump'),{once:true});
 
@@ -974,6 +984,7 @@ function resetJourney(){
           </span>
         </div>
       </div>`;
+    card.getBoundingClientRect();
     card.classList.add('card-enter');
     setTimeout(()=>card.classList.remove('card-enter'),700);
   }, 180);
